@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
     // Test config
     "vitest.setup.ts",
     "playwright.config.ts",
+    // Coverage output
+    "coverage/**",
   ]),
 ]);
 

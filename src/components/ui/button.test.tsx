@@ -52,15 +52,16 @@ describe("Button", () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
-  it("forwards asChild to render a child anchor", () => {
+  it("forwards asChild to render a child element", () => {
     render(
       <Button asChild>
-        <a href="/perfumes">Link button</a>
+        <span data-testid="slotted">Slotted</span>
       </Button>
     );
-    const link = screen.getByRole("link", { name: "Link button" });
-    expect(link).toBeInTheDocument();
-    expect(link.tagName).toBe("A");
+    const slotted = screen.getByTestId("slotted");
+    expect(slotted).toBeInTheDocument();
+    expect(slotted.tagName).toBe("SPAN");
+    expect(slotted.className).toContain("inline-flex");
   });
 
   it("passes through data-testid and aria-label", () => {
