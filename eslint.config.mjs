@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Playwright E2E tests (linted separately if needed)
+    "e2e/**",
+    // Test config
+    "vitest.setup.ts",
+    "playwright.config.ts",
+    // Coverage output
+    "coverage/**",
   ]),
 ]);
 

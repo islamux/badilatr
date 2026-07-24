@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { Link } from "@/i18n/navigation";
 
 export async function SiteHeader() {
@@ -25,15 +25,24 @@ export async function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/">{t("home")}</Link>
-          </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/perfumes">{t("perfumes")}</Link>
-          </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/brands">{t("brands")}</Link>
-          </Button>
+          <Link
+            href="/"
+            className={buttonVariants({ variant: "ghost", size: "sm" })}
+          >
+            {t("home")}
+          </Link>
+          <Link
+            href="/perfumes"
+            className={buttonVariants({ variant: "ghost", size: "sm" })}
+          >
+            {t("perfumes")}
+          </Link>
+          <Link
+            href="/brands"
+            className={buttonVariants({ variant: "ghost", size: "sm" })}
+          >
+            {t("brands")}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-1">
