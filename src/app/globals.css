@@ -1,0 +1,149 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Enable class-based dark mode (driven by next-themes `.dark` on <html>). */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Badil Atr — luxury design tokens.
+ * Palette: Obsidian Black, Luxury Gold, Champagne, Ivory, Dark Slate.
+ */
+:root {
+  --radius: 0.75rem;
+
+  --background: #fcfbf8; /* ivory */
+  --foreground: #1a1a1a; /* obsidian ink */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+
+  --primary: #b8975a; /* luxury gold */
+  --primary-foreground: #1a1a1a;
+
+  --secondary: #f0ead6; /* champagne tint */
+  --secondary-foreground: #1a1a1a;
+
+  --muted: #f4f1ea;
+  --muted-foreground: #6b6b6b;
+
+  --accent: #e8d5b7; /* champagne */
+  --accent-foreground: #1a1a1a;
+
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
+
+  --border: #e2dccb;
+  --input: #e2dccb;
+  --ring: #b8975a;
+
+  /* Brand aliases */
+  --gold: #b8975a;
+  --champagne: #e8d5b7;
+  --obsidian: #0b0b0c;
+  --ivory: #fcfbf8;
+  --slate: #2a2f3a;
+
+  --chart-1: #b8975a;
+  --chart-2: #c5a572;
+  --chart-3: #e8d5b7;
+  --chart-4: #6b7280;
+  --chart-5: #1a1a1a;
+}
+
+.dark {
+  --background: #0b0b0c; /* obsidian */
+  --foreground: #f5f2ea; /* ivory */
+  --card: #141416;
+  --card-foreground: #f5f2ea;
+  --popover: #141416;
+  --popover-foreground: #f5f2ea;
+
+  --primary: #c5a572; /* gold, brightened for dark */
+  --primary-foreground: #0b0b0c;
+
+  --secondary: #1f1f22;
+  --secondary-foreground: #f5f2ea;
+
+  --muted: #1a1a1d;
+  --muted-foreground: #9a9a9a;
+
+  --accent: #2a2418; /* dark champagne */
+  --accent-foreground: #e8d5b7;
+
+  --destructive: #f4635f;
+  --destructive-foreground: #0b0b0c;
+
+  --border: #26262a;
+  --input: #26262a;
+  --ring: #c5a572;
+
+  --gold: #c5a572;
+  --champagne: #e8d5b7;
+  --obsidian: #0b0b0c;
+  --ivory: #fcfbf8;
+  --slate: #9aa3b2;
+
+  --chart-1: #c5a572;
+  --chart-2: #e8d5b7;
+  --chart-3: #b8975a;
+  --chart-4: #9aa3b2;
+  --chart-5: #f5f2ea;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-gold: var(--gold);
+  --color-champagne: var(--champagne);
+  --color-obsidian: var(--obsidian);
+  --color-ivory: var(--ivory);
+  --color-slate: var(--slate);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-sans);
+  --font-arabic: var(--font-arabic);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}

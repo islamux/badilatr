@@ -1,0 +1,37 @@
+{
+  "Metadata": {
+    "title": "Badil Atr — Discover Perfume Alternatives",
+    "description": "A premium fragrance discovery platform. Find the closest alternative to your favorite luxury perfume with transparent similarity scoring."
+  },
+  "Nav": {
+    "home": "Home",
+    "perfumes": "Perfumes",
+    "brands": "Houses",
+    "search": "Search"
+  },
+  "Theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "Locale": {
+    "switch": "العربية"
+  },
+  "Landing": {
+    "badge": "Fragrance discovery engine",
+    "title": "Find your perfect perfume alternative",
+    "subtitle": "Discover the closest alternatives to luxury fragrances with transparent similarity scoring and clear reasoning for every match.",
+    "searchPlaceholder": "Search a perfume or house…",
+    "search": "Search",
+    "trending": "Trending alternatives",
+    "arabicHouses": "Best Arabic perfume houses",
+    "communityFavorites": "Community favorites",
+    "recentlyAdded": "Recently added",
+    "howItWorks": "How it works",
+    "comingSoon": "Coming soon"
+  },
+  "Footer": {
+    "rights": "© {year} Badil Atr. All rights reserved.",
+    "tagline": "Your golden guide to Eastern perfumery"
+  }
+}
