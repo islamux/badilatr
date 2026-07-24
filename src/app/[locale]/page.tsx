@@ -1,11 +1,13 @@
 import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { PerfumeCard } from "@/components/perfume-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { staticPerfumes } from "@/data/perfumes";
 
 export default async function LandingPage({
   params,
@@ -16,8 +18,9 @@ export default async function LandingPage({
   setRequestLocale(locale);
   const t = await getTranslations("Landing");
 
-  const sections = [
-    { key: "trending", icon: "🔥" },
+  const isAr = locale === "ar";
+
+  const comingSoonSections = [
     { key: "arabicHouses", icon: "🏛️" },
     { key: "communityFavorites", icon: "⭐" },
     { key: "recentlyAdded", icon: "✨" },
@@ -64,9 +67,27 @@ export default async function LandingPage({
         </div>
       </section>
 
-      {/* Content shelves (placeholders until data features land) */}
+      {/* Featured perfumes (real scraped data) */}
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 py-16">
-        {sections.map(({ key, icon }) => (
+        <section className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+              <span className="me-2">🔥</span>
+              {t("trending")}
+            </h2>
+            <Badge variant="gold" className="text-xs">
+              {staticPerfumes.length} {isAr ? "عطر" : "perfumes"}
+            </Badge>
+          </div>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {staticPerfumes.map((perfume) => (
+              <PerfumeCard key={perfume.slug} perfume={perfume} locale={locale} />
+            ))}
+          </div>
+        </section>
+
+        {/* Coming soon sections */}
+        {comingSoonSections.map(({ key, icon }) => (
           <section key={key} className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
