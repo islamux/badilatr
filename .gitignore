@@ -44,3 +44,6 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 /test-results/
+
+# graphify
+/graphify-out/
