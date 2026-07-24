@@ -2,6 +2,17 @@
   "name": "badeelatr",
   "version": "0.1.0",
   "private": true,
+  "description": "A premium Arabic-first perfume discovery platform with transparent similarity scoring.",
+  "license": "GPL-3.0",
+  "author": "islamux",
+  "homepage": "https://github.com/islamux/badilatr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/islamux/badilatr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/islamux/badilatr/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
