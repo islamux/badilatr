@@ -47,3 +47,6 @@ next-env.d.ts
 
 # graphify
 /graphify-out/
+scripts/scrape/.venv/
+scripts/scrape/output/
+__pycache__/
