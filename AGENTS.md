@@ -64,7 +64,7 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full deep-dive. Key points:
 - **Unit tests** co-located: `src/**/*.test.{ts,tsx}`
 - **E2E tests** in `e2e/*.spec.ts`
 - **happy-dom** environment for component tests
-- **Coverage include**: `src/lib/**`, `src/components/ui/**`, `scripts/seed-data.ts`
+- **Coverage include**: `src/lib/**`, `src/components/ui/**`, `scripts/ingest/**`
 - **No snapshot tests** — use explicit assertions
 - **Test behavior, not implementation** — prefer `getByRole`/`getByText` over `getByTestId`
 

@@ -19,7 +19,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "text-summary", "lcov"],
-      include: ["src/lib/**", "src/components/ui/**", "scripts/seed-data.ts"],
+      include: ["src/lib/**", "src/components/ui/**", "scripts/ingest/**"],
       exclude: ["**/*.test.*", "**/*.spec.*", "**/*.d.ts"],
       thresholds: {
         statements: 70,
