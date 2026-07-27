@@ -30,6 +30,31 @@
     "howItWorks": "كيف يعمل",
     "comingSoon": "قريبًا"
   },
+  "Perfumes": {
+    "title": "كل العطور",
+    "count": "{count} عطر"
+  },
+  "Brands": {
+    "title": "البيوت العطرية",
+    "count": "{count} بيت عطري"
+  },
+  "PerfumeDetail": {
+    "released": "سنة الإصدار",
+    "perfumer": "العطّار",
+    "gender": "الجنس",
+    "concentration": "التركيز",
+    "family": "العائلة العطرية",
+    "brand": "البيت العطري",
+    "pyramid": "الهرم العطري",
+    "notFound": "العطر غير موجود"
+  },
+  "BrandDetail": {
+    "country": "الدولة",
+    "founded": "سنة التأسيس",
+    "type": "النوع",
+    "catalog": "كتالوج العطور",
+    "notFound": "البيت العطري غير موجود"
+  },
   "Footer": {
     "rights": "© {year} بديل عطر. جميع الحقوق محفوظة.",
     "tagline": "دليلك الذهبي لعطور الشرق"
