@@ -206,7 +206,7 @@ Request → proxy.ts (middleware) → locale extraction → [locale] segment
 
 ### Coverage
 
-- **Scope:** `src/lib/**`, `src/components/ui/**`, `scripts/seed-data.ts`
+- **Scope:** `src/lib/**`, `src/components/ui/**`, `scripts/ingest/**`
 - **Threshold:** 70% minimum (statements, branches, functions, lines)
 - **Current:** 100%
 - **Excluded:** Pages (tested via E2E), DB client (needs live DB), config files

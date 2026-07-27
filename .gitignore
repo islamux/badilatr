@@ -49,4 +49,6 @@ next-env.d.ts
 /graphify-out/
 scripts/scrape/.venv/
 scripts/scrape/output/
+perfume_scraper/output/
+perfume_scraper/.venv/
 __pycache__/

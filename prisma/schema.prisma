@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  moderator
+  user
+}
+
+enum BrandType {
+  arabic
+  designer
+  niche
+}
+
+enum Gender {
+  male
+  female
+  unisex
+}
+
+enum Concentration {
+  edt
+  edp
+  parfum
+  extrait
+}
+
+enum FragranceFamily {
+  woody
+  oriental
+  fresh
+  floral
+  gourmand
+}
+
+enum NoteLayer {
+  top
+  heart
+  base
+}
+
+enum Currency {
+  usd
+  sar
+  aed
+  egp
+}
+
+model User {
+  id            String    @id
+  name          String?
+  email         String    @unique
+  emailVerified Boolean   @default(false) @map("email_verified")
+  image         String?
+  role          UserRole  @default(user)
+  preferences   Json?
+  createdAt     DateTime  @default(now()) @db.Timestamptz(6) @map("created_at")
+  updatedAt     DateTime  @default(now()) @db.Timestamptz(6) @map("updated_at")
+
+  reviews Review[]
+
+  @@index([role])
+  @@map("users")
+}
+
+model Brand {
+  id           Int       @id @default(autoincrement())
+  name         String
+  slug         String    @unique
+  country      String?
+  foundedYear  Int?      @map("founded_year")
+  logo         String?
+  description  String?
+  type         BrandType @default(arabic)
+  createdAt    DateTime  @default(now()) @db.Timestamptz(6) @map("created_at")
+  updatedAt    DateTime  @default(now()) @db.Timestamptz(6) @map("updated_at")
+
+  perfumes Perfume[]
+
+  @@index([type])
+  @@map("brands")
+}
+
+model Perfume {
+  id               Int              @id @default(autoincrement())
+  brandId          Int              @map("brand_id")
+  name             String
+  slug             String           @unique
+  releaseYear      Int?             @map("release_year")
+  perfumer         String?
+  gender           Gender
+  concentration    Concentration
+  fragranceFamily  FragranceFamily  @map("fragrance_family")
+  description      String?
+  image            String?
+  embedding        Unsupported("vector(1536)")?
+  createdAt        DateTime         @default(now()) @db.Timestamptz(6) @map("created_at")
+  updatedAt        DateTime         @default(now()) @db.Timestamptz(6) @map("updated_at")
+
+  brand                    Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  notes                    PerfumeNote[]
+  reviews                  Review[]
+  alternativesAsOriginal    Alternative[] @relation("original")
+  alternativesAsAlternative Alternative[] @relation("alternative")
+
+  @@index([brandId])
+  @@index([fragranceFamily])
+  @@index([gender])
+  @@map("perfumes")
+}
+
+model Note {
+  id        Int            @id @default(autoincrement())
+  name      String
+  slug      String         @unique
+  createdAt DateTime       @default(now()) @db.Timestamptz(6) @map("created_at")
+
+  perfumes PerfumeNote[]
+
+  @@map("notes")
+}
+
+model PerfumeNote {
+  perfumeId Int       @map("perfume_id")
+  noteId    Int       @map("note_id")
+  layer     NoteLayer
+
+  perfume Perfume @relation(fields: [perfumeId], references: [id], onDelete: Cascade)
+  note    Note    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  @@id([perfumeId, noteId])
+  @@index([noteId])
+  @@index([layer])
+  @@map("perfume_notes")
+}
+
+model Alternative {
+  originalId            Int       @map("original_id")
+  alternativeId         Int       @map("alternative_id")
+  similarityScore       Float     @map("similarity_score")
+  priceOriginal         Int?      @map("price_original")
+  priceAlternative      Int?      @map("price_alternative")
+  currency              Currency  @default(usd)
+  similarityExplanation String?   @map("similarity_explanation")
+  advantages            String[]
+  disadvantages         String[]
+  expertNotes           String?   @map("expert_notes")
+  createdAt             DateTime  @default(now()) @db.Timestamptz(6) @map("created_at")
+  updatedAt             DateTime  @default(now()) @db.Timestamptz(6) @map("updated_at")
+
+  original    Perfume @relation("original", fields: [originalId], references: [id], onDelete: Cascade)
+  alternative Perfume @relation("alternative", fields: [alternativeId], references: [id], onDelete: Cascade)
+
+  @@id([originalId, alternativeId])
+  @@index([alternativeId])
+  @@index([similarityScore])
+  @@map("alternatives")
+}
+
+model Review {
+  userId     String   @map("user_id")
+  perfumeId  Int      @map("perfume_id")
+  rating     Int
+  longevity  Int?
+  projection Int?
+  sillage    Int?
+  comment    String?
+  verified   Boolean  @default(false)
+  createdAt  DateTime @default(now()) @db.Timestamptz(6) @map("created_at")
+  updatedAt  DateTime @default(now()) @db.Timestamptz(6) @map("updated_at")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  perfume Perfume @relation(fields: [perfumeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, perfumeId])
+  @@index([perfumeId])
+  @@index([rating])
+  @@map("reviews")
+}
