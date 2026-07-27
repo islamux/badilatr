@@ -30,6 +30,31 @@
     "howItWorks": "How it works",
     "comingSoon": "Coming soon"
   },
+  "Perfumes": {
+    "title": "All perfumes",
+    "count": "{count} perfumes"
+  },
+  "Brands": {
+    "title": "Houses",
+    "count": "{count} houses"
+  },
+  "PerfumeDetail": {
+    "released": "Released",
+    "perfumer": "Perfumer",
+    "gender": "Gender",
+    "concentration": "Concentration",
+    "family": "Fragrance family",
+    "brand": "House",
+    "pyramid": "Olfactory pyramid",
+    "notFound": "Perfume not found"
+  },
+  "BrandDetail": {
+    "country": "Country",
+    "founded": "Founded",
+    "type": "Type",
+    "catalog": "Perfume catalog",
+    "notFound": "House not found"
+  },
   "Footer": {
     "rights": "© {year} Badil Atr. All rights reserved.",
     "tagline": "Your golden guide to Eastern perfumery"
