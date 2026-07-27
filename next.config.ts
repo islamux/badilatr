@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.shopify.com" },
       { protocol: "https", hostname: "cdn.salla.sa" },
+      { protocol: "https", hostname: "fimgs.net" },
     ],
   },
 };

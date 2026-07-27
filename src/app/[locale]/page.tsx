@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { staticPerfumes } from "@/data/perfumes";
+import { getLandingPerfumes } from "@/server/repositories/perfumes";
 
 export default async function LandingPage({
   params,
@@ -19,6 +19,8 @@ export default async function LandingPage({
   const t = await getTranslations("Landing");
 
   const isAr = locale === "ar";
+
+  const perfumes = await getLandingPerfumes();
 
   const comingSoonSections = [
     { key: "arabicHouses", icon: "🏛️" },
@@ -76,11 +78,11 @@ export default async function LandingPage({
               {t("trending")}
             </h2>
             <Badge variant="gold" className="text-xs">
-              {staticPerfumes.length} {isAr ? "عطر" : "perfumes"}
+              {perfumes.length} {isAr ? "عطر" : "perfumes"}
             </Badge>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {staticPerfumes.map((perfume) => (
+            {perfumes.map((perfume) => (
               <PerfumeCard key={perfume.slug} perfume={perfume} locale={locale} />
             ))}
           </div>

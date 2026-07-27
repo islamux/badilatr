@@ -9,6 +9,12 @@ import { Link } from "@/i18n/navigation";
 export async function SiteHeader() {
   const t = await getTranslations("Nav");
 
+  const navItems = [
+    { href: "/", label: "home" },
+    { href: "/perfumes", label: "perfumes" },
+    { href: "/brands", label: "brands" },
+  ] as const;
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4">
@@ -25,24 +31,15 @@ export async function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          <Link
-            href="/"
-            className={buttonVariants({ variant: "ghost", size: "sm" })}
-          >
-            {t("home")}
-          </Link>
-          <Link
-            href="/perfumes"
-            className={buttonVariants({ variant: "ghost", size: "sm" })}
-          >
-            {t("perfumes")}
-          </Link>
-          <Link
-            href="/brands"
-            className={buttonVariants({ variant: "ghost", size: "sm" })}
-          >
-            {t("brands")}
-          </Link>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={buttonVariants({ variant: "ghost", size: "sm" })}
+            >
+              {t(item.label)}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center gap-1">
