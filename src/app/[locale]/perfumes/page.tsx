@@ -4,6 +4,8 @@ import { PerfumeCard } from "@/components/perfume-card";
 import { Badge } from "@/components/ui/badge";
 import { getAllPerfumes } from "@/server/repositories/perfumes";
 
+export const dynamic = "force-dynamic";
+
 export default async function PerfumesPage({
   params,
 }: {

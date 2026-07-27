@@ -4,22 +4,16 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 
 import { PerfumeCard } from "@/components/perfume-card";
 import { Badge } from "@/components/ui/badge";
-import { routing } from "@/i18n/routing";
-import { getAllBrands, getBrandBySlug } from "@/server/repositories/brands";
+import { getBrandBySlug } from "@/server/repositories/brands";
 import { getAllPerfumes } from "@/server/repositories/perfumes";
+
+export const dynamic = "force-dynamic";
 
 const TYPE_LABEL: Record<string, { ar: string; en: string }> = {
   arabic: { ar: "عربية", en: "Arabic" },
   designer: { ar: "تصميمية", en: "Designer" },
   niche: { ar: "نيش", en: "Niche" },
 };
-
-export async function generateStaticParams() {
-  const brands = await getAllBrands();
-  return routing.locales.flatMap((locale) =>
-    brands.map((b) => ({ locale, slug: b.slug })),
-  );
-}
 
 export async function generateMetadata({
   params,

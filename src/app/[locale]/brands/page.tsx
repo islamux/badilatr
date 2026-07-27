@@ -4,6 +4,8 @@ import { BrandCard } from "@/components/brand-card";
 import { Badge } from "@/components/ui/badge";
 import { getAllBrands } from "@/server/repositories/brands";
 
+export const dynamic = "force-dynamic";
+
 export default async function BrandsPage({
   params,
 }: {

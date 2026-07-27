@@ -7,21 +7,15 @@ import { OlfactoryPyramid } from "@/components/olfactory-pyramid";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { getAllPerfumes, getPerfumeBySlug } from "@/server/repositories/perfumes";
+import { getPerfumeBySlug } from "@/server/repositories/perfumes";
+
+export const dynamic = "force-dynamic";
 
 const GENDER_LABEL: Record<string, { ar: string; en: string }> = {
   male: { ar: "رجالي", en: "Men" },
   female: { ar: "نسائي", en: "Women" },
   unisex: { ar: "للجنسين", en: "Unisex" },
 };
-
-export async function generateStaticParams() {
-  const perfumes = await getAllPerfumes();
-  return routing.locales.flatMap((locale) =>
-    perfumes.map((p) => ({ locale, slug: p.slug })),
-  );
-}
 
 export async function generateMetadata({
   params,
