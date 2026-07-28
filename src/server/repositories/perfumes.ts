@@ -48,6 +48,7 @@ export async function getPerfumeBySlug(
   });
   if (!p) return null;
   return {
+    id: p.id,
     slug: p.slug,
     name: p.name,
     image: p.image,
