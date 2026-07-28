@@ -46,6 +46,8 @@
     "family": "العائلة العطرية",
     "brand": "البيت العطري",
     "pyramid": "الهرم العطري",
+    "alternatives": "بدائل مشابهة",
+    "sharedNotes": "مكونات مشتركة",
     "notFound": "العطر غير موجود"
   },
   "BrandDetail": {

@@ -46,6 +46,8 @@
     "family": "Fragrance family",
     "brand": "House",
     "pyramid": "Olfactory pyramid",
+    "alternatives": "Similar alternatives",
+    "sharedNotes": "Shared notes",
     "notFound": "Perfume not found"
   },
   "BrandDetail": {

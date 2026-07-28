@@ -4,9 +4,11 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 
 import { OlfactoryPyramid } from "@/components/olfactory-pyramid";
+import { AlternativesSection } from "@/components/alternatives-section";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
+import { getAlternatives } from "@/server/repositories/alternatives";
 import { getPerfumeBySlug } from "@/server/repositories/perfumes";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +45,8 @@ export default async function PerfumeDetailPage({
   const isAr = locale === "ar";
   const perfume = await getPerfumeBySlug(slug);
   if (!perfume) notFound();
+
+  const alternatives = await getAlternatives(perfume.id);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -133,6 +137,14 @@ export default async function PerfumeDetailPage({
             </CardContent>
           </Card>
         </div>
+      </div>
+      <div className="mt-12">
+        <AlternativesSection
+          alternatives={alternatives}
+          locale={locale}
+          heading={t("alternatives")}
+          sharedLabel={t("sharedNotes")}
+        />
       </div>
     </div>
   );
