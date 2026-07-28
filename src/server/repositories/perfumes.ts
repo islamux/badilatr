@@ -7,7 +7,7 @@ type PerfumeWithRelations = Prisma.PerfumeGetPayload<{
   include: { brand: true; notes: { include: { note: true } } };
 }>;
 
-function mapPerfume(p: PerfumeWithRelations): StaticPerfume {
+export function mapPerfume(p: PerfumeWithRelations): StaticPerfume {
   return {
     name: p.name,
     slug: p.slug,
