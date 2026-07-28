@@ -17,6 +17,7 @@ import json
 import re
 import sys
 import time
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -48,7 +49,13 @@ def slugify(text: str) -> str:
 
 
 def fetch(url: str) -> str:
-    req = urllib.request.Request(url, headers=HEADERS)
+    parsed = urllib.parse.urlparse(url)
+    encoded_path = urllib.parse.quote(parsed.path, safe='/:@')
+    encoded_url = urllib.parse.urlunparse((
+        parsed.scheme, parsed.netloc, encoded_path,
+        parsed.params, parsed.query, parsed.fragment,
+    ))
+    req = urllib.request.Request(encoded_url, headers=HEADERS)
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
@@ -80,6 +87,109 @@ def parse_notes(text: str) -> dict:
             if name and len(name) < 50:
                 notes[layer].append({"id": "", "name": name})
     return notes
+
+
+def fetch_sitemap_products(base_url: str) -> list[str]:
+    sitemap = fetch(f"{base_url.rstrip('/')}/ar/sitemap-2.xml")
+    return re.findall(r'https://[^/]+/ar/[^/]+/p\d+', sitemap)
+
+
+def scrape_product(url: str, brand_name: str, country: str) -> dict | None:
+    html = fetch(url)
+    pid_match = re.search(r'/p(\d+)', url)
+    pid = pid_match.group(1) if pid_match else ""
+
+    name = ""
+    name_match = re.search(r'<title>([^<]+)', html)
+    if name_match:
+        name = name_match.group(1).split("|")[0].strip(" -–")
+
+    image = ""
+    img_match = re.search(r'<meta\s+property="og:image"\s+content="([^"]+)"', html)
+    if img_match:
+        image = img_match.group(1)
+
+    desc = ""
+    desc_match = re.search(r'<meta\s+name="description"\s+content="([^"]+)"', html)
+    if desc_match:
+        desc = desc_match.group(1)[:500]
+
+    gender = "unisex"
+    gender_match = re.search(r'رجالي|نسائي|للجنسين', html)
+    if gender_match:
+        raw = gender_match.group(0)
+        if raw == "رجالي":
+            gender = "male"
+        elif raw == "نسائي":
+            gender = "female"
+
+    notes: dict[str, list[dict]] = {"top": [], "middle": [], "base": []}
+    note_patterns = [
+        (r'النوتة\s*العليا\s*(?:للعطر)?\s*:?\s*(.*?)(?:\s*</)', "top"),
+        (r'النوتة\s*الوسطى\s*(?:للعطر)?\s*:?\s*(.*?)(?:\s*</)', "middle"),
+        (r'النوتة\s*القاعدية\s*(?:للعطر)?\s*:?\s*(.*?)(?:\s*</)', "base"),
+    ]
+    for pat, layer in note_patterns:
+        match = re.search(pat, html, re.DOTALL)
+        if match:
+            content = strip_html(match.group(1))
+            for raw_name in re.split(r'[,;،]', content):
+                raw_name = raw_name.strip()
+                if raw_name and len(raw_name) < 50:
+                    notes[layer].append({"id": "", "name": raw_name})
+
+    skip_kw = re.compile(r'\b(بخور|دهن|مسك|معطرات|مبخرة|مقشر|مرطب|منظف|شامبو|بلسم|كريم|جسم|شعر|جو|هدية|مجموعة|gift|set|bakhoor|oud\s*oil|musk|body|hair|home|spray|incense|burner)\b', re.I)
+    skip_text = f"{name} {desc} {html[:2000]}"
+    if skip_kw.search(skip_text):
+        return None
+
+    return {
+        "pid": pid,
+        "name": name or f"Rasasi-{pid}",
+        "brand": brand_name,
+        "brand_country": country,
+        "brand_logo": None,
+        "perfumer": None,
+        "year": None,
+        "description": desc or None,
+        "gender": {"label": gender, "distribution": {}},
+        "accords": [],
+        "notes": notes,
+        "image_urls": [image] if image else [],
+    }
+
+
+def scrape_salla(brand: dict, limit: int) -> dict:
+    name = brand["name"]
+    base_url = brand["url"].rstrip("/")
+    country = brand.get("country", "SA")
+
+    print(f"  fetching sitemap from {base_url} ...")
+    product_urls = fetch_sitemap_products(base_url)
+    print(f"  {len(product_urls)} product URLs found in sitemap")
+
+    perfumes = []
+    for i, url in enumerate(product_urls):
+        if limit and i >= limit:
+            break
+        print(f"  [{i+1}/{min(limit, len(product_urls))}] {url}")
+        try:
+            result = scrape_product(url, name, country)
+            if result:
+                perfumes.append(result)
+        except Exception as e:
+            print(f"    ⚠ error: {e}")
+        time.sleep(1.5)
+
+    return {
+        "source": "salla",
+        "source_url": base_url,
+        "total_count": len(perfumes),
+        "perfumes": perfumes,
+        "brands": [{"id": "", "name": name, "country": country, "website": base_url}],
+        "notes": [],
+        "accords": [],
+    }
 
 
 def scrape_shopify(brand: dict, limit: int) -> dict:
@@ -164,6 +274,8 @@ def main():
 
         if scraper_type == "shopify":
             result = scrape_shopify(brand, args.limit)
+        elif scraper_type == "salla":
+            result = scrape_salla(brand, args.limit)
         else:
             print(f"  ⚠ '{scraper_type}' scraper not yet implemented — skipping {name}")
             continue
