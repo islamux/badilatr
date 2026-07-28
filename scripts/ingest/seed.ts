@@ -15,7 +15,9 @@ import type { FragDbBrandRow, Layer, PyramidLayer } from './types';
 const PYRAMID_LAYERS: readonly PyramidLayer[] = ['top', 'middle', 'base'] as const;
 
 async function main() {
-  const data = await loadFragDb();
+  const sourcePath = process.argv[2];
+  const data = await loadFragDb(sourcePath);
+  console.log(`Seeding from: ${sourcePath ?? 'default FragDB output'} (${data.total_count} perfumes)`);
 
   const brandRefByName = new Map<string, FragDbBrandRow>();
   for (const b of data.brands) {
