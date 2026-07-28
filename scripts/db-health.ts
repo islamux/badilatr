@@ -2,7 +2,8 @@ import { prisma } from '../src/server/db/client';
 import { run } from './run';
 
 async function main() {
-  const exts = await prisma.$queryRaw`SELECT extname FROM pg_extension WHERE extname IN ('vector', 'pg_trgm')`;
+  const exts =
+    await prisma.$queryRaw`SELECT extname::text FROM pg_extension WHERE extname IN ('vector', 'pg_trgm')`;
   const names = (exts as { extname: string }[]).map((r) => r.extname);
   if (!names.includes('vector') || !names.includes('pg_trgm')) {
     throw new Error(`Required extensions missing. Found: ${names.join(', ') || 'none'}`);
