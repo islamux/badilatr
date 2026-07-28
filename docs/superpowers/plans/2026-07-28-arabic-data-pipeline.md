@@ -1,50 +1,20 @@
 # RESUME — Arabic Data Pipeline (Phase 1)
 
-_Handoff doc for the next session. Last updated: 2026-07-28._
-**Branch:** `feat/arabic-data-pipeline` (NOT yet committed — WIP, see below)
+_Handoff doc. Last updated: 2026-07-28. **Phase 1 COMPLETE (Afnan + Armaf).**_
+**Branch:** `feat/arabic-data-pipeline`
 
 ## Goal
 
-Build a **repeatable, resumable pipeline** to scrape Arabic perfume houses from their **official e-commerce stores** (free, legal, no anti-bot) and seed them alongside the 10 designer originals — so the product can show designer→Arabic alternatives.
+Build a **repeatable, resumable pipeline** to scrape Arabic perfume houses from their **official e-commerce stores** (free, legal, no anti-bot) and seed them alongside the designer originals.
 
-## What's DONE (verified)
+## ✅ DONE — Phase 1 (Afnan + Armaf)
 
-- **De-risked:** Afnan (`https://afnan.com`) and Armaf (`https://www.armaf.ae`) `/products.json` endpoints return rich data (Shopify). Rasasi Salla store (`store.rasasi.com.sa`) reachable. Afnan PDPs contain full note pyramids in `body_html`.
-- **Built the scraper:** `perfume_scraper/scrape_official.py` — clean, **stdlib-only** (no httpx/playwright dep), config-driven via `perfume_scraper/brands.json`. Parses Top/Middle/Base notes from `body_html`. Emits **FragDB-shaped JSON** (so `seed.ts` ingests it unchanged — no adapter needed).
-- **Generalized seed:** `scripts/ingest/seed.ts` now accepts a path arg: `pnpm db:seed <path-to-json>`.
-- **Scraped Afnan:** `perfume_scraper/output/afnan_scraped.json` — **80 perfumes, all 80 with note pyramids** (correctly parsed after a regex fix).
-- **Fixed a note-parsing bug:** initial regex over-captured across sections; fixed with lookahead `(?=\s*(?:middle|heart|base)\s*notes?:|$)`. Verified: Malak → top: Marshmallow/Lemon/Apple/White Floral, middle: Musk/Coconut/Orange Blossom, base: Amber/Vanilla/Sugar. ✓
-
-## CURRENT STATE — resume here
-
-### DB state (LIVE)
-| brand | type | perfumes |
-|---|---|---|
-| Afnan | arabic | **0** ← brand exists, perfumes were cleaned (buggy seed removed); **needs re-seed** |
-| 7 designer brands | designer | 10 |
-
-### Git state (UNcommitted WIP on `feat/arabic-data-pipeline`)
-- Modified: `scripts/ingest/seed.ts` (path arg)
-- New (untracked): `perfume_scraper/scrape_official.py`, `perfume_scraper/brands.json`
-- `perfume_scraper/output/afnan_scraped.json` is gitignored (regenerable)
-- `scrpper.md` is pre-existing, NOT ours — do not commit
-
-## ▶️ RESUME COMMANDS (do these first)
-
-```bash
-git checkout feat/arabic-data-pipeline
-
-# 1. Re-seed Afnan (scraped file is ready, regex fixed)
-pnpm db:seed perfume_scraper/output/afnan_scraped.json
-# Expected: "✓ Seeded from FragDB: 1 brands, ~299 notes, 80 perfumes, ~493 note links."
-
-# 2. Verify
-psql "$DATABASE_URL" -c "SELECT b.name, b.type, count(p.id) FROM brands b LEFT JOIN perfumes p ON p.brand_id=b.id GROUP BY b.name,b.type ORDER BY b.type;"
-
-# 3. Scrape + seed Armaf (Shopify, same as Afnan)
-python3 perfume_scraper/scrape_official.py --brand Armaf --limit 250
-pnpm db:seed perfume_scraper/output/armaf_scraped.json
-```
+- **Scraper:** `perfume_scraper/scrape_official.py` — stdlib-only, config-driven (`perfume_scraper/brands.json`). Parses Top/Middle/Base notes from Shopify `body_html`. Emits FragDB-shaped JSON.
+- **Seed generalized:** `pnpm db:seed <path>` accepts any FragDB-shaped JSON.
+- **Afnan:** scraped (80 perfumes, 80 with pyramids) + seeded ✓
+- **Armaf:** scraped (229 perfumes, 166 with pyramids) + seeded (227 after slug dedup) ✓
+- **Total catalog:** 317 perfumes (10 designer + 307 Arabic), 743 notes, ~2300 note links.
+- Gates: typecheck ✓ · lint ✓ · 65/65 tests ✓. Search finds Arabic perfumes ✓.
 
 ## Then: the rest of Phase 1
 
