@@ -55,6 +55,13 @@
     "catalog": "Perfume catalog",
     "notFound": "House not found"
   },
+  "Search": {
+    "title": "Search results",
+    "placeholder": "Search a perfume or house…",
+    "button": "Search",
+    "count": "{count} results",
+    "noResults": "No results matching \"{query}\""
+  },
   "Footer": {
     "rights": "© {year} Badil Atr. All rights reserved.",
     "tagline": "Your golden guide to Eastern perfumery"
