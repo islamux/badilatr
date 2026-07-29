@@ -67,16 +67,16 @@ export function AlternativesSection({
                 </div>
                 <div className="flex flex-col gap-1 p-4">
                   <div className="min-w-0">
-                    <h3 className="truncate font-semibold text-sm" title={alt.name}>
+                    <h3 className="truncate font-semibold text-card-name" title={alt.name}>
                       {alt.name}
                     </h3>
-                    <p className="truncate text-xs text-muted-foreground">
+                    <p className="truncate text-meta text-muted-foreground">
                       {alt.brand.name}
                     </p>
                   </div>
                   {alt.sharedNotes.length > 0 && (
                     <div className="flex flex-col gap-1 pt-1">
-                      <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                      <span className="text-caption uppercase tracking-wide text-muted-foreground">
                         {sharedLabel}
                       </span>
                       <div className="flex flex-wrap gap-1">
@@ -84,7 +84,7 @@ export function AlternativesSection({
                           <span
                             key={note.name}
                             className={cn(
-                              "rounded-md px-1.5 py-0.5 text-[10px]",
+                              "rounded-md px-1.5 py-0.5 text-caption",
                               note.sameLayer
                                 ? "bg-gold/15 text-gold"
                                 : "bg-muted text-muted-foreground",
