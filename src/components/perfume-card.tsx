@@ -104,7 +104,7 @@ export function PerfumeCard({
                   </span>
                   <span
                     title={names.join(" · ")}
-                    className="text-card-body leading-relaxed text-muted-foreground"
+                    className="text-card-body text-muted-foreground"
                   >
                     {firstNotePlusCount(names)}
                   </span>
