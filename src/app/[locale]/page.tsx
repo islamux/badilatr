@@ -2,6 +2,7 @@ import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { PerfumeCard } from "@/components/perfume-card";
+import { PyramidMotif } from "@/components/pyramid-motif";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -34,42 +35,48 @@ export default async function LandingPage({
       <section className="relative overflow-hidden border-b border-border/60">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklch,var(--gold)_22%,transparent),transparent)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklch,var(--gold)_18%,transparent),transparent)]"
         />
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-6 px-4 py-24 text-center sm:py-32">
-          <Badge variant="gold" className="gap-1.5 px-3 py-1 text-sm">
-            <Sparkles className="size-3.5" />
-            {t("badge")}
-          </Badge>
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-4 py-20 md:grid-cols-2 md:py-28">
+          <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-start">
+            <Badge variant="gold" className="gap-1.5 px-3 py-1 text-sm">
+              <Sparkles className="size-3.5" />
+              {t("badge")}
+            </Badge>
 
-          <h1 className="max-w-3xl text-balance text-4xl font-semibold tracking-tight sm:text-6xl">
-            {t("title")}
-          </h1>
+            <h1 className="max-w-2xl text-balance text-4xl tracking-tight sm:text-5xl lg:text-6xl">
+              {t("title")}
+            </h1>
 
-          <p className="max-w-2xl text-pretty text-lg text-muted-foreground">
-            {t("subtitle")}
-          </p>
+            <p className="max-w-xl text-pretty text-lg text-muted-foreground">
+              {t("subtitle")}
+            </p>
 
-          <form
-            action={`/${locale}/search`}
-            method="get"
-            className="mt-2 flex w-full max-w-xl items-center gap-2"
-          >
-            <div className="relative flex-1">
-              <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                type="search"
-                name="q"
-                placeholder={t("searchPlaceholder")}
-                className="h-12 ps-9 text-base"
-                aria-label={t("search")}
-              />
-            </div>
-            <Button type="submit" size="lg" className="h-12">
-              {t("search")}
-              <ArrowRight className="rtl:rotate-180" />
-            </Button>
-          </form>
+            <form
+              action={`/${locale}/search`}
+              method="get"
+              className="mt-2 flex w-full max-w-xl items-center gap-2"
+            >
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="search"
+                  name="q"
+                  placeholder={t("searchPlaceholder")}
+                  className="h-12 ps-9 text-base"
+                  aria-label={t("search")}
+                />
+              </div>
+              <Button type="submit" size="lg" className="h-12">
+                {t("search")}
+                <ArrowRight className="rtl:rotate-180" />
+              </Button>
+            </form>
+          </div>
+
+          <div className="flex justify-center md:justify-end">
+            <PyramidMotif locale={locale} size="lg" />
+          </div>
         </div>
       </section>
 

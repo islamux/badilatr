@@ -26,11 +26,15 @@ export default async function BrandsPage({
           {t("count", { count: brands.length })}
         </Badge>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {brands.map((b) => (
-          <BrandCard key={b.slug} brand={b} locale={locale} />
-        ))}
-      </div>
+      {brands.length > 0 ? (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {brands.map((b) => (
+            <BrandCard key={b.slug} brand={b} locale={locale} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-pretty text-muted-foreground">{t("empty")}</p>
+      )}
     </div>
   );
 }

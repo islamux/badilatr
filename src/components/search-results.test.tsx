@@ -1,6 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({
+    href,
+    locale,
+    children,
+  }: {
+    href: string;
+    locale: string;
+    children: React.ReactNode;
+  }) => <a href={`/${locale}${href}`}>{children}</a>,
+}));
 vi.mock("next/image", () => ({
   default: () => null,
 }));

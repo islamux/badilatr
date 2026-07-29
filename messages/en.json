@@ -7,7 +7,8 @@
     "home": "Home",
     "perfumes": "Perfumes",
     "brands": "Houses",
-    "search": "Search"
+    "search": "Search",
+    "menu": "Menu"
   },
   "Theme": {
     "toggle": "Toggle theme",
@@ -32,11 +33,13 @@
   },
   "Perfumes": {
     "title": "All perfumes",
-    "count": "{count} perfumes"
+    "count": "{count} perfumes",
+    "empty": "No perfumes yet. Check back soon."
   },
   "Brands": {
     "title": "Houses",
-    "count": "{count} houses"
+    "count": "{count} houses",
+    "empty": "No houses yet. Check back soon."
   },
   "PerfumeDetail": {
     "released": "Released",
@@ -63,6 +66,16 @@
     "button": "Search",
     "count": "{count} results",
     "noResults": "No results matching \"{query}\""
+  },
+  "Errors": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred while loading the page. Please try again.",
+    "retry": "Try again"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "Sorry, we couldn't find what you're looking for.",
+    "home": "Back to home"
   },
   "Footer": {
     "rights": "© {year} Badil Atr. All rights reserved.",

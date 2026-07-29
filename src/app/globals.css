@@ -5,90 +5,102 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Badil Atr — luxury design tokens.
- * Palette: Obsidian Black, Luxury Gold, Champagne, Ivory, Dark Slate.
+ * Badil Atr — "Oud & Ink" design tokens.
+ * Palette grounded in perfume materials: oud-black ink, aged gold (dehnal oud),
+ * saffron (top notes), damascena rose (heart), amber resin (base), parchment ivory.
  */
 :root {
   --radius: 0.75rem;
 
-  --background: #fcfbf8; /* ivory */
-  --foreground: #1a1a1a; /* obsidian ink */
-  --card: #ffffff;
-  --card-foreground: #1a1a1a;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
+  --background: #f7f1e6; /* aged parchment */
+  --foreground: #1a1208; /* oud ink */
+  --card: #fffaf0; /* warm white */
+  --card-foreground: #1a1208;
+  --popover: #fffaf0;
+  --popover-foreground: #1a1208;
 
-  --primary: #b8975a; /* luxury gold */
-  --primary-foreground: #1a1a1a;
+  --primary: #a9762e; /* aged gold (light) */
+  --primary-foreground: #fffaf0;
 
-  --secondary: #f0ead6; /* champagne tint */
-  --secondary-foreground: #1a1a1a;
+  --secondary: #efe6d2; /* champagne tint */
+  --secondary-foreground: #1a1208;
 
-  --muted: #f4f1ea;
-  --muted-foreground: #6b6b6b;
+  --muted: #efe6d2;
+  --muted-foreground: #6b5d44; /* warm muted */
 
   --accent: #e8d5b7; /* champagne */
-  --accent-foreground: #1a1a1a;
+  --accent-foreground: #1a1208;
 
   --destructive: #b3261e;
   --destructive-foreground: #ffffff;
 
-  --border: #e2dccb;
-  --input: #e2dccb;
-  --ring: #b8975a;
+  --border: #e2d5b7;
+  --input: #e2d5b7;
+  --ring: #a9762e;
 
-  /* Brand aliases */
-  --gold: #b8975a;
+  /* Brand + material aliases */
+  --gold: #a9762e;
   --champagne: #e8d5b7;
-  --obsidian: #0b0b0c;
-  --ivory: #fcfbf8;
-  --slate: #2a2f3a;
+  --obsidian: #1a1208;
+  --ivory: #f7f1e6;
+  --slate: #4a4030;
+  --ink: #1a1208;
 
-  --chart-1: #b8975a;
+  /* Note-layer materials (theme-adaptive) */
+  --saffron: #a9762e; /* top */
+  --rose: #9e5a4e; /* heart */
+  --amber: #8a5a26; /* base */
+
+  --chart-1: #a9762e;
   --chart-2: #c5a572;
   --chart-3: #e8d5b7;
-  --chart-4: #6b7280;
-  --chart-5: #1a1a1a;
+  --chart-4: #6b5d44;
+  --chart-5: #1a1208;
 }
 
 .dark {
-  --background: #0b0b0c; /* obsidian */
-  --foreground: #f5f2ea; /* ivory */
-  --card: #141416;
-  --card-foreground: #f5f2ea;
-  --popover: #141416;
-  --popover-foreground: #f5f2ea;
+  --background: #120e0a; /* oud-black */
+  --foreground: #f5ecdb; /* parchment */
+  --card: #1c1610; /* raised warm surface */
+  --card-foreground: #f5ecdb;
+  --popover: #1c1610;
+  --popover-foreground: #f5ecdb;
 
-  --primary: #c5a572; /* gold, brightened for dark */
-  --primary-foreground: #0b0b0c;
+  --primary: #c79a3f; /* aged gold, brightened for dark */
+  --primary-foreground: #120e0a;
 
-  --secondary: #1f1f22;
-  --secondary-foreground: #f5f2ea;
+  --secondary: #241b12;
+  --secondary-foreground: #f5ecdb;
 
-  --muted: #1a1a1d;
-  --muted-foreground: #9a9a9a;
+  --muted: #1f1810;
+  --muted-foreground: #a99a78; /* warm tan-grey */
 
   --accent: #2a2418; /* dark champagne */
   --accent-foreground: #e8d5b7;
 
-  --destructive: #f4635f;
-  --destructive-foreground: #0b0b0c;
+  --destructive: #c0392b;
+  --destructive-foreground: #ffffff;
 
-  --border: #26262a;
-  --input: #26262a;
-  --ring: #c5a572;
+  --border: #2c2218;
+  --input: #2c2218;
+  --ring: #c79a3f;
 
-  --gold: #c5a572;
+  --gold: #c79a3f;
   --champagne: #e8d5b7;
-  --obsidian: #0b0b0c;
-  --ivory: #fcfbf8;
-  --slate: #9aa3b2;
+  --obsidian: #120e0a;
+  --ivory: #f5ecdb;
+  --slate: #a99a78;
+  --ink: #120e0a;
 
-  --chart-1: #c5a572;
+  --saffron: #e0a72e; /* top — bright saffron */
+  --rose: #d4796b; /* heart — damascena rose */
+  --amber: #c88a4a; /* base — amber resin */
+
+  --chart-1: #c79a3f;
   --chart-2: #e8d5b7;
-  --chart-3: #b8975a;
-  --chart-4: #9aa3b2;
-  --chart-5: #f5f2ea;
+  --chart-3: #c5a572;
+  --chart-4: #a99a78;
+  --chart-5: #f5ecdb;
 }
 
 @theme inline {
@@ -123,6 +135,11 @@
   --color-obsidian: var(--obsidian);
   --color-ivory: var(--ivory);
   --color-slate: var(--slate);
+  --color-ink: var(--ink);
+
+  --color-saffron: var(--saffron);
+  --color-rose: var(--rose);
+  --color-amber: var(--amber);
 
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -137,6 +154,8 @@
 
   --font-sans: var(--font-sans);
   --font-arabic: var(--font-arabic);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
 }
 
 @layer base {
@@ -145,5 +164,9 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  h1 {
+    font-family: var(--font-display), var(--font-arabic), var(--font-sans);
+    font-weight: 600;
   }
 }
