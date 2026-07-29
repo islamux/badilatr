@@ -53,7 +53,7 @@ export function OlfactoryPyramid({
               >
                 {LAYER_LABELS[layer][lang]}
               </span>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-caption text-muted-foreground">
                 {items.length}
               </span>
             </div>
