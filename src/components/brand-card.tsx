@@ -29,16 +29,16 @@ export function BrandCard({
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <div className="flex items-center justify-between gap-2">
               <h3 className="truncate font-semibold">{brand.name}</h3>
-              <Badge variant="outline" className="text-[10px] capitalize">
+              <Badge variant="outline" className="text-caption capitalize">
                 {BRAND_TYPE_LABELS[brand.type]?.[lang] ?? brand.type}
               </Badge>
             </div>
             {brand.country && (
-              <p className="truncate text-xs text-muted-foreground">
+              <p className="truncate text-meta text-muted-foreground">
                 {brand.country}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-meta text-muted-foreground">
               {perfumeCountLabel(brand.perfumeCount, locale)}
             </p>
           </div>
