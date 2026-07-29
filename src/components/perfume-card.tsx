@@ -16,6 +16,11 @@ import type { StaticPerfume } from "@/data/perfumes";
 
 const NOTE_LAYERS = ["top", "heart", "base"] as const;
 
+function firstNotePlusCount(names: string[]): string {
+  if (!names.length) return "";
+  return names.length > 1 ? `${names[0]} +${names.length - 1}` : names[0];
+}
+
 export function PerfumeCard({
   perfume,
   locale,
@@ -53,7 +58,7 @@ export function PerfumeCard({
           {perfume.family && (
             <Badge
               variant="gold"
-              className="absolute end-2 top-2 text-[10px] capitalize backdrop-blur-sm"
+              className="absolute end-2 top-2 text-caption capitalize backdrop-blur-sm"
             >
               {tEnum(perfume.family, FAMILY_LABELS, locale)}
             </Badge>
@@ -63,22 +68,22 @@ export function PerfumeCard({
         <CardContent className="space-y-2 p-4">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <h3 className="truncate font-semibold text-sm" title={perfume.name}>
+              <h3 className="truncate font-semibold text-card-name" title={perfume.name}>
                 {perfume.name}
               </h3>
-              <p className="truncate text-xs text-muted-foreground">
+              <p className="truncate text-meta text-muted-foreground">
                 {perfume.brand}
               </p>
             </div>
             {perfume.price != null && perfume.currency && (
-              <span className="shrink-0 text-sm font-medium text-gold">
+              <span className="shrink-0 text-card-name font-medium text-gold">
                 {perfume.price} {perfume.currency}
               </span>
             )}
           </div>
 
           {perfume.gender && GENDER_LABELS[perfume.gender] && (
-            <Badge variant="outline" className="text-[10px]">
+            <Badge variant="outline" className="text-caption">
               {GENDER_LABELS[perfume.gender][lang]}
             </Badge>
           )}
@@ -91,14 +96,17 @@ export function PerfumeCard({
                 <div key={layer} className="flex items-start gap-1.5">
                   <span
                     className={cn(
-                      "mt-0.5 shrink-0 text-[10px] font-medium",
+                      "mt-0.5 shrink-0 text-caption font-medium",
                       LAYER_ACCENT[layer],
                     )}
                   >
                     {LAYER_LABELS[layer][lang]}:
                   </span>
-                  <span className="text-[11px] leading-relaxed text-muted-foreground">
-                    {names.join(" · ")}
+                  <span
+                    title={names.join(" · ")}
+                    className="text-card-body leading-relaxed text-muted-foreground"
+                  >
+                    {firstNotePlusCount(names)}
                   </span>
                 </div>
               );

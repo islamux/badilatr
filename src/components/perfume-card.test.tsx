@@ -35,6 +35,19 @@ const perfume: StaticPerfume = {
   ],
 };
 
+const layeredPerfume: StaticPerfume = {
+  ...perfume,
+  slug: "layered-test",
+  notes: [
+    { name: "Saffron", layer: "top" },
+    { name: "Bergamot", layer: "top" },
+    { name: "Peony", layer: "heart" },
+    { name: "Amber", layer: "base" },
+    { name: "Oud", layer: "base" },
+    { name: "Sandalwood", layer: "base" },
+  ],
+};
+
 describe("PerfumeCard", () => {
   it("renders the perfume name and brand", () => {
     render(<PerfumeCard perfume={perfume} locale="en" />);
@@ -68,5 +81,17 @@ describe("PerfumeCard", () => {
     expect(screen.getByText(/Top:/)).toBeInTheDocument();
     expect(screen.getByText(/Heart:/)).toBeInTheDocument();
     expect(screen.getByText(/Base:/)).toBeInTheDocument();
+  });
+
+  it("truncates notes to first per layer with +N count", () => {
+    render(<PerfumeCard perfume={layeredPerfume} locale="en" />);
+    expect(screen.getByText("Saffron +1")).toBeInTheDocument();
+    expect(screen.getByText("Amber +2")).toBeInTheDocument();
+  });
+
+  it("keeps the full note list in the title tooltip", () => {
+    render(<PerfumeCard perfume={layeredPerfume} locale="en" />);
+    expect(screen.getByTitle("Saffron · Bergamot")).toBeInTheDocument();
+    expect(screen.getByTitle("Amber · Oud · Sandalwood")).toBeInTheDocument();
   });
 });
