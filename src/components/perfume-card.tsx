@@ -96,7 +96,7 @@ export function PerfumeCard({
                 <div key={layer} className="flex items-start gap-1.5">
                   <span
                     className={cn(
-                      "mt-0.5 shrink-0 text-caption font-medium",
+                      "mt-0.5 shrink-0 text-caption",
                       LAYER_ACCENT[layer],
                     )}
                   >
