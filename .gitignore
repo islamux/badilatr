@@ -52,3 +52,6 @@ scripts/scrape/output/
 perfume_scraper/output/
 perfume_scraper/.venv/
 __pycache__/
+
+# superpowers brainstorm mockups
+.superpowers/
