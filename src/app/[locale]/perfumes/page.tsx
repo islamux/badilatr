@@ -26,11 +26,15 @@ export default async function PerfumesPage({
           {t("count", { count: perfumes.length })}
         </Badge>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {perfumes.map((p) => (
-          <PerfumeCard key={p.slug} perfume={p} locale={locale} />
-        ))}
-      </div>
+      {perfumes.length > 0 ? (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {perfumes.map((p) => (
+            <PerfumeCard key={p.slug} perfume={p} locale={locale} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-pretty text-muted-foreground">{t("empty")}</p>
+      )}
     </div>
   );
 }

@@ -27,7 +27,7 @@
 | Styling | Tailwind CSS v4 + shadcn/ui | Utility-first, accessible primitives |
 | i18n | next-intl | Locale routing, message loading, RTL/LTR |
 | Database | PostgreSQL (Neon) + pgvector | Serverless Postgres with vector similarity search |
-| ORM | Drizzle ORM | SQL-like control, typed schema-as-code migrations |
+| ORM | Prisma ORM (`@prisma/adapter-pg`) | Type-safe client, driver adapters, declarative schema-as-code migrations |
 | Testing | Vitest + Playwright | Fast unit tests, cross-browser E2E |
 | Auth | Better Auth (planned) | Edge-compatible, session management |
 
@@ -56,9 +56,9 @@ Set `DATABASE_URL` to your Neon pooled connection string (with `?sslmode=require
 ### 3. Set up the database
 
 ```bash
-pnpm db:push      # push schema to Neon
+pnpm db:push      # push Prisma schema to Neon (prisma db push)
 pnpm db:health    # verify extensions + connectivity
-pnpm db:seed      # seed 8 Arabic houses, 24 notes, 8 perfumes
+pnpm db:seed      # seed perfume data via FragDB ingest (scripts/ingest/seed.ts)
 ```
 
 ### 4. Run
@@ -91,11 +91,12 @@ pnpm test:e2e       # Playwright browser tests (5 tests)
 | `pnpm test:coverage` | Vitest with V8 coverage report |
 | `pnpm test:e2e` | Playwright E2E tests (auto-starts dev server) |
 | `pnpm test:e2e:ui` | Playwright interactive UI mode |
-| `pnpm db:generate` | Generate SQL migration from schema changes |
-| `pnpm db:push` | Push schema directly to database (dev) |
-| `pnpm db:migrate` | Apply generated migrations |
-| `pnpm db:studio` | Open Drizzle Studio (visual DB browser) |
-| `pnpm db:seed` | Seed curated Arabic perfume data |
+| `pnpm db:generate` | Generate Prisma Client (`prisma generate`) |
+| `pnpm db:push` | Push schema directly to database (`prisma db push`) |
+| `pnpm db:migrate` | Apply generated migrations (`prisma migrate deploy`) |
+| `pnpm db:studio` | Open Prisma Studio (visual DB browser) |
+| `pnpm db:seed` | Seed perfume data via FragDB ingest |
+| `pnpm db:reset` | Wipe links/perfumes/notes/brands (reviews/alternatives cascade) |
 | `pnpm db:health` | Database connectivity smoke test |
 
 ## Project Structure
@@ -125,12 +126,9 @@ src/
 │   └── utils.ts           # cn() — clsx + tailwind-merge
 ├── server/
 │   ├── db/
-│   │   ├── schema/        # Drizzle schema: enums, users, brands, perfumes,
-│   │   │                  #   notes, perfume_notes, alternatives, reviews
-│   │   ├── client.ts      # Lazy Neon HTTP singleton (getDb)
-│   │   └── migrations/    # Generated SQL + HNSW/GIN indexes
+│   │   └── client.ts      # Prisma client singleton (@prisma/adapter-pg)
 │   ├── actions/           # Server actions (future)
-│   ├── repositories/      # Data access layer (future)
+│   ├── repositories/      # Data access: perfumes, brands, alternatives, search
 │   └── services/          # Business logic (future)
 ├── proxy.ts               # next-intl middleware (locale routing)
 ├── hooks/                 # Custom React hooks (future)
@@ -140,9 +138,16 @@ messages/
 ├── ar.json                # Arabic translation catalog
 └── en.json                # English translation catalog
 
+prisma/
+├── schema.prisma          # Prisma schema: enums, users, brands, perfumes, notes,
+│                          #   perfume_notes, alternatives, reviews
+├── extensions.sql         # pgvector + pg_trgm extension setup
+└── constraints.sql        # CHECK constraints + composite indexes
+
 scripts/
-├── seed-data.ts           # Curated seed data (8 houses, 24 notes, 8 perfumes)
-├── seed.ts                # Idempotent seeding script
+├── ingest/                # FragDB ETL: load, mappers (pure), seed, types
+├── run.ts                 # CLI helper wrapper
+├── reset-db.ts            # Wipe links/perfumes/notes/brands (cascades)
 └── db-health.ts           # Database smoke test
 
 e2e/

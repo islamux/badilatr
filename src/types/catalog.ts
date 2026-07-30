@@ -43,4 +43,6 @@ export type Alternative = {
   brand: { name: string; slug: string };
   score: number;
   sharedNotes: { name: string; sameLayer: boolean }[];
+  onlyOriginal: string[];
+  onlyAlternative: string[];
 };

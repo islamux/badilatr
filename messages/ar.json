@@ -7,7 +7,8 @@
     "home": "الرئيسية",
     "perfumes": "العطور",
     "brands": "البيوت العطرية",
-    "search": "بحث"
+    "search": "بحث",
+    "menu": "القائمة"
   },
   "Theme": {
     "toggle": "تبديل الوضع",
@@ -32,11 +33,13 @@
   },
   "Perfumes": {
     "title": "كل العطور",
-    "count": "{count} عطر"
+    "count": "{count} عطر",
+    "empty": "لا توجد عطور بعد. عُد قريبًا."
   },
   "Brands": {
     "title": "البيوت العطرية",
-    "count": "{count} بيت عطري"
+    "count": "{count} بيت عطري",
+    "empty": "لا توجد بيوت عطرية بعد. عُد قريبًا."
   },
   "PerfumeDetail": {
     "released": "سنة الإصدار",
@@ -48,6 +51,10 @@
     "pyramid": "الهرم العطري",
     "alternatives": "بدائل مشابهة",
     "sharedNotes": "مكونات مشتركة",
+    "whySimilar": "لماذا هو مشابه",
+    "differences": "الاختلافات",
+    "inOriginal": "في الأصلي",
+    "inAlternative": "في البديل",
     "notFound": "العطر غير موجود"
   },
   "BrandDetail": {
@@ -63,6 +70,16 @@
     "button": "بحث",
     "count": "{count} نتيجة",
     "noResults": "لا توجد نتائج مطابقة لـ \"{query}\""
+  },
+  "Errors": {
+    "title": "حدث خطأ ما",
+    "description": "حدث خطأ غير متوقع أثناء تحميل الصفحة. حاول مرة أخرى.",
+    "retry": "إعادة المحاولة"
+  },
+  "NotFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "عذرًا، لم نتمكن من العثور على ما تبحث عنه.",
+    "home": "العودة للرئيسية"
   },
   "Footer": {
     "rights": "© {year} بديل عطر. جميع الحقوق محفوظة.",

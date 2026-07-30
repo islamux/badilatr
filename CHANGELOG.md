@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **ORM migration:** switched from Drizzle ORM to Prisma ORM (`@prisma/adapter-pg`) — `src/server/db/client.ts` now exports a `PrismaClient` singleton; schema source of truth moved to `prisma/schema.prisma`; db scripts now use `prisma generate/db push/migrate/studio`; seed switched to FragDB ingest.
+
+### Added
+
+- **Perfume alternatives (Original VS Alternative):** runtime note-overlap similarity engine (`src/lib/similarity.ts`), `getAlternatives` repository, and `AlternativesSection` on the perfume detail page (score badges + shared-note chips).
+- **E2E tests** for the perfume-alternatives flow (`e2e/perfume-alternatives.spec.ts`) in Arabic (RTL) + English (LTR).
+
 ## [0.1.0] - 2026-07-24
 
 ### Added
@@ -40,4 +51,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `package.json` enriched with `description`, `license`, `repository`, `homepage`, and `author` metadata fields
 - Root-level `data-base-plan.md` moved to `docs/data-base-plan.md` for cleaner project root
 
+[Unreleased]: https://github.com/islamux/badilatr/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/islamux/badilatr/releases/tag/v0.1.0

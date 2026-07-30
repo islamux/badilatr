@@ -28,6 +28,8 @@ const alternatives: Alternative[] = [
       { name: "Bergamot", sameLayer: true },
       { name: "Amber", sameLayer: false },
     ],
+    onlyOriginal: ["Lemon", "Musk"],
+    onlyAlternative: ["Vanilla"],
   },
 ];
 
@@ -61,6 +63,31 @@ describe("AlternativesSection", () => {
     );
     expect(screen.getByText(/Bergamot/)).toBeInTheDocument();
     expect(screen.getByText(/Amber/)).toBeInTheDocument();
+  });
+
+  it("renders differences when labels are provided", () => {
+    render(
+      <AlternativesSection
+        alternatives={alternatives}
+        locale="en"
+        heading="Alternatives"
+        sharedLabel="Shared notes"
+        differencesLabel="Differences"
+        inOriginalLabel="In original"
+        inAlternativeLabel="In alternative"
+      />,
+    );
+    expect(screen.getByText("Differences")).toBeInTheDocument();
+    expect(screen.getByText(/Lemon/)).toBeInTheDocument();
+    expect(screen.getByText(/Musk/)).toBeInTheDocument();
+    expect(screen.getByText(/Vanilla/)).toBeInTheDocument();
+  });
+
+  it("omits the differences block when labels are absent", () => {
+    render(
+      <AlternativesSection alternatives={alternatives} locale="en" heading="Alternatives" sharedLabel="Shared notes" />,
+    );
+    expect(screen.queryByText("Differences")).not.toBeInTheDocument();
   });
 
   it("links to the alternative perfume page", () => {

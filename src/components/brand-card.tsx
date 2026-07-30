@@ -1,13 +1,8 @@
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { BRAND_TYPE_LABELS, catalogLocale, perfumeCountLabel } from "@/lib/catalog-labels";
 import type { BrandSummary } from "@/types/catalog";
-
-const TYPE_LABEL: Record<BrandSummary["type"], { ar: string; en: string }> = {
-  arabic: { ar: "عربية", en: "Arabic" },
-  designer: { ar: "تصميمية", en: "Designer" },
-  niche: { ar: "نيش", en: "Niche" },
-};
 
 export function BrandCard({
   brand,
@@ -16,24 +11,37 @@ export function BrandCard({
   brand: BrandSummary;
   locale: string;
 }) {
-  const isAr = locale === "ar";
-  const countLabel = isAr
-    ? `${brand.perfumeCount} عطر`
-    : `${brand.perfumeCount} perfumes`;
+  const lang = catalogLocale(locale);
   return (
-    <Link href={`/brands/${brand.slug}`} locale={locale as "ar" | "en"}>
-      <Card className="h-full transition-shadow hover:shadow-lg">
-        <CardContent className="flex flex-col gap-1 p-4">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="truncate font-semibold">{brand.name}</h3>
-            <Badge variant="outline" className="text-[10px] capitalize">
-              {isAr ? TYPE_LABEL[brand.type].ar : TYPE_LABEL[brand.type].en}
-            </Badge>
+    <Link
+      href={`/brands/${brand.slug}`}
+      locale={lang}
+      className="group block h-full rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    >
+      <Card className="h-full transition-shadow group-hover:shadow-lg">
+        <CardContent className="flex items-center gap-3 p-4">
+          <span
+            aria-hidden
+            className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg font-semibold text-primary"
+          >
+            {brand.name.charAt(0)}
+          </span>
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="truncate font-semibold">{brand.name}</h3>
+              <Badge variant="outline" className="text-caption capitalize">
+                {BRAND_TYPE_LABELS[brand.type]?.[lang] ?? brand.type}
+              </Badge>
+            </div>
+            {brand.country && (
+              <p className="truncate text-meta text-muted-foreground">
+                {brand.country}
+              </p>
+            )}
+            <p className="text-meta text-muted-foreground">
+              {perfumeCountLabel(brand.perfumeCount, locale)}
+            </p>
           </div>
-          {brand.country && (
-            <p className="text-xs text-muted-foreground">{brand.country}</p>
-          )}
-          <p className="mt-1 text-xs text-muted-foreground">{countLabel}</p>
         </CardContent>
       </Card>
     </Link>
