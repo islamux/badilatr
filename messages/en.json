@@ -51,6 +51,10 @@
     "pyramid": "Olfactory pyramid",
     "alternatives": "Similar alternatives",
     "sharedNotes": "Shared notes",
+    "whySimilar": "Why it's similar",
+    "differences": "Differences",
+    "inOriginal": "In original",
+    "inAlternative": "In alternative",
     "notFound": "Perfume not found"
   },
   "BrandDetail": {

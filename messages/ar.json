@@ -51,6 +51,10 @@
     "pyramid": "الهرم العطري",
     "alternatives": "بدائل مشابهة",
     "sharedNotes": "مكونات مشتركة",
+    "whySimilar": "لماذا هو مشابه",
+    "differences": "الاختلافات",
+    "inOriginal": "في الأصلي",
+    "inAlternative": "في البديل",
     "notFound": "العطر غير موجود"
   },
   "BrandDetail": {

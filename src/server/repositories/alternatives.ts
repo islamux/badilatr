@@ -56,6 +56,8 @@ export async function getAlternatives(perfumeId: number): Promise<Alternative[]>
         brand: { name: r.brand.name, slug: r.brand.slug },
         score: result.score,
         sharedNotes: result.shared,
+        onlyOriginal: result.onlyOriginal,
+        onlyAlternative: result.onlyAlternative,
       };
     })
     .filter((a) => a.score >= MIN_SCORE)

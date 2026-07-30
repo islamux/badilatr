@@ -66,4 +66,38 @@ describe("computeSimilarityScore", () => {
     expect(computeSimilarityScore(empty, empty).score).toBe(0);
     expect(computeSimilarityScore(empty, { top: ["X"], heart: [], base: [] }).score).toBe(0);
   });
+
+  it("reports notes only in the original or only in the alternative", () => {
+    const a = { top: ["Bergamot", "Lemon"], heart: ["Rose"], base: ["Amber", "Musk"] };
+    const b = { top: ["Bergamot"], heart: ["Violet"], base: ["Amber", "Vanilla"] };
+    const result = computeSimilarityScore(a, b);
+    expect(result.onlyOriginal).toEqual(expect.arrayContaining(["Lemon", "Rose", "Musk"]));
+    expect(result.onlyAlternative).toEqual(expect.arrayContaining(["Violet", "Vanilla"]));
+    expect(result.onlyOriginal).not.toContain("Bergamot");
+    expect(result.onlyAlternative).not.toContain("Amber");
+  });
+
+  it("lists all notes as differences when pyramids are disjoint", () => {
+    const a = { top: ["Bergamot"], heart: ["Rose"], base: ["Amber"] };
+    const b = { top: ["Pepper"], heart: ["Violet"], base: ["Oak"] };
+    const result = computeSimilarityScore(a, b);
+    expect(result.score).toBe(0);
+    expect(result.onlyOriginal).toEqual(expect.arrayContaining(["Bergamot", "Rose", "Amber"]));
+    expect(result.onlyAlternative).toEqual(expect.arrayContaining(["Pepper", "Violet", "Oak"]));
+  });
+
+  it("preserves original casing in difference lists", () => {
+    const a = { top: ["BERGAMOT"], heart: [], base: [] };
+    const b = { top: ["Lemon"], heart: [], base: [] };
+    const result = computeSimilarityScore(a, b);
+    expect(result.onlyOriginal).toContain("BERGAMOT");
+    expect(result.onlyAlternative).toContain("Lemon");
+  });
+
+  it("leaves difference lists empty for identical pyramids", () => {
+    const a = { top: ["Bergamot"], heart: ["Rose"], base: ["Amber"] };
+    const result = computeSimilarityScore(a, a);
+    expect(result.onlyOriginal).toEqual([]);
+    expect(result.onlyAlternative).toEqual([]);
+  });
 });

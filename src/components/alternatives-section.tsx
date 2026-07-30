@@ -26,11 +26,17 @@ export function AlternativesSection({
   locale,
   heading,
   sharedLabel,
+  differencesLabel,
+  inOriginalLabel,
+  inAlternativeLabel,
 }: {
   alternatives: Alternative[];
   locale: string;
   heading: string;
   sharedLabel: string;
+  differencesLabel?: string;
+  inOriginalLabel?: string;
+  inAlternativeLabel?: string;
 }) {
   if (!alternatives.length) return null;
 
@@ -96,6 +102,56 @@ export function AlternativesSection({
                       </div>
                     </div>
                   )}
+                  {differencesLabel &&
+                    inOriginalLabel &&
+                    inAlternativeLabel &&
+                    (alt.onlyOriginal.length > 0 || alt.onlyAlternative.length > 0) && (
+                      <div className="flex flex-col gap-1.5 pt-1">
+                        <span className="text-caption uppercase tracking-wide text-muted-foreground">
+                          {differencesLabel}
+                        </span>
+                        {alt.onlyOriginal.length > 0 && (
+                          <div className="flex flex-wrap items-center gap-1">
+                            <span className="text-caption text-muted-foreground">
+                              {inOriginalLabel}:
+                            </span>
+                            {alt.onlyOriginal.slice(0, 4).map((note) => (
+                              <span
+                                key={note}
+                                className="rounded-md bg-muted px-1.5 py-0.5 text-caption text-muted-foreground"
+                              >
+                                {note}
+                              </span>
+                            ))}
+                            {alt.onlyOriginal.length > 4 && (
+                              <span className="text-caption text-muted-foreground">
+                                +{alt.onlyOriginal.length - 4}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                        {alt.onlyAlternative.length > 0 && (
+                          <div className="flex flex-wrap items-center gap-1">
+                            <span className="text-caption text-muted-foreground">
+                              {inAlternativeLabel}:
+                            </span>
+                            {alt.onlyAlternative.slice(0, 4).map((note) => (
+                              <span
+                                key={note}
+                                className="rounded-md bg-gold/15 px-1.5 py-0.5 text-caption text-gold"
+                              >
+                                {note}
+                              </span>
+                            ))}
+                            {alt.onlyAlternative.length > 4 && (
+                              <span className="text-caption text-gold">
+                                +{alt.onlyAlternative.length - 4}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
                 </div>
               </CardContent>
             </Card>

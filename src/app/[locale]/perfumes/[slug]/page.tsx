@@ -157,6 +157,9 @@ export default async function PerfumeDetailPage({
           locale={locale}
           heading={t("alternatives")}
           sharedLabel={t("sharedNotes")}
+          differencesLabel={t("differences")}
+          inOriginalLabel={t("inOriginal")}
+          inAlternativeLabel={t("inAlternative")}
         />
       </div>
     </div>
