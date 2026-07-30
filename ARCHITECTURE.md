@@ -17,10 +17,10 @@
 │  │ [locale]/ │  │  middleware │  │   (RSC + streaming) │ │
 │  └──────────┘  └─────────────┘  └─────────┬──────────┘ │
 │  ┌──────────────────────────────────────┐ │            │
-│  │ Drizzle ORM (typed queries)          │◄┘            │
+│  │ Prisma ORM (@prisma/adapter-pg)      │◄┘            │
 │  └──────────────────┬───────────────────┘              │
 └─────────────────────┼───────────────────────────────────┘
-                      │ pooled connection (WebSocket / HTTP)
+                      │ pooled connection (pg / TCP)
 ┌─────────────────────▼───────────────────────────────────┐
 │              Neon PostgreSQL (Serverless)                │
 │  ┌─────────┐  ┌──────────┐  ┌────────────────────────┐ │
@@ -38,12 +38,12 @@ Chosen for React Server Components (zero client JS for static content), streamin
 ### TypeScript (strict mode)
 Strict null checks and no implicit `any` catch bugs at compile time. The entire stack — schema, queries, components, API routes — is typed end-to-end.
 
-### Drizzle ORM (not Prisma)
-Drizzle was chosen over Prisma for:
-- **pgvector first-class support** — native `vector(1536)` column type
-- **SQL-like query builder** — full control over hybrid search (full-text + trigram + vector)
-- **Schema-as-code migrations** — generated SQL is auditable and augmented with custom indexes
-- **No runtime overhead** — thin layer over SQL, no query engine binary
+### Prisma ORM (`@prisma/adapter-pg`)
+Prisma is used with the `@prisma/adapter-pg` driver adapter over a `pg` connection:
+- **Type-safe client** — generated `PrismaClient` with end-to-end types from `prisma/schema.prisma`
+- **Driver adapters** — `@prisma/adapter-pg` works with Supabase / Neon / local Postgres via `DATABASE_URL`
+- **Schema-as-code** — `prisma/schema.prisma` is the single source of truth; migrations via `prisma migrate`
+- **pgvector support** — `embedding vector(1536)` declared as `Unsupported("vector(1536)")`; similarity queries use raw SQL via `prisma.$queryRaw`
 
 ### Neon (Serverless PostgreSQL)
 - HTTP/WebSocket driver (no TCP connection pooling needed)

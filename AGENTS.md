@@ -4,7 +4,7 @@ Project-level instructions for AI agents working on Badil Atr (بديل عطر).
 
 ## Project Overview
 
-Arabic-first perfume discovery platform. Next.js 16 App Router + Drizzle ORM + Neon Postgres (pgvector/pg_trgm). Arabic (RTL) is the default locale; English (LTR) is secondary.
+Arabic-first perfume discovery platform. Next.js 16 App Router + Prisma ORM (@prisma/adapter-pg) + Neon Postgres (pgvector/pg_trgm). Arabic (RTL) is the default locale; English (LTR) is secondary.
 
 ## Essential Commands
 
@@ -18,10 +18,12 @@ pnpm test                 # vitest run (unit + integration)
 pnpm test:watch           # vitest watch mode
 pnpm test:coverage        # vitest with coverage (threshold: 70%)
 pnpm test:e2e             # playwright E2E (auto-starts dev server)
-pnpm db:push              # push schema to Neon
-pnpm db:seed              # seed Arabic perfume data
+pnpm db:push              # prisma db push (push schema to Neon)
+pnpm db:seed              # seed perfume data via FragDB ingest
 pnpm db:health            # DB connectivity smoke test
-pnpm db:generate          # generate migration from schema changes
+pnpm db:generate          # prisma generate (regenerate Prisma Client)
+pnpm db:migrate           # prisma migrate deploy (apply migrations)
+pnpm db:studio            # prisma studio (visual DB browser)
 ```
 
 ## Pre-Commit Gates
@@ -46,7 +48,7 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full deep-dive. Key points:
 
 - **App Router** with `[locale]` segment — pages in `src/app/[locale]/`
 - **Server Components by default** — add `"use client"` only when needed (events, state, browser APIs)
-- **Drizzle ORM** — schema in `src/server/db/schema/`, queries via `getDb()` lazy singleton in `src/server/db/client.ts`
+- **Prisma ORM** — schema in `prisma/schema.prisma` (source of truth), client via `prisma` singleton in `src/server/db/client.ts`
 - **next-intl** — config in `src/i18n/`, messages in `messages/{ar,en}.json`
 - **shadcn/ui** — primitives in `src/components/ui/`, owned (not a dependency)
 - **`buttonVariants`** extracted to `src/components/ui/button-variants.ts` (server-safe, no `"use client"`)
@@ -57,7 +59,7 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for the full deep-dive. Key points:
 - **7 tables**: users, brands, perfumes, notes, perfume_notes, alternatives, reviews
 - **Note layer** (top/heart/base) lives on `perfume_notes` join table, not on `notes`
 - **`perfumes.embedding`** is `vector(1536)` — nullable until AI Matching subsystem lands
-- **Schema changes**: edit `src/server/db/schema/*.ts` → `pnpm db:generate` → review SQL → `pnpm db:push`
+- **Schema changes**: edit `prisma/schema.prisma` → `pnpm db:generate` → review migration → `pnpm db:push`
 
 ## Testing
 
@@ -82,8 +84,8 @@ src/components/ui/    shadcn/ui primitives
 src/components/       Shared components (header, footer, providers)
 src/i18n/             next-intl config (routing, navigation, request)
 src/lib/              Pure utilities (cn)
-src/server/db/schema/ Drizzle schema definitions
-src/server/db/        DB client + migrations
+prisma/schema.prisma  Prisma schema (source of truth)
+src/server/db/        Prisma client singleton
 scripts/              CLI scripts (seed, health check)
 e2e/                  Playwright E2E specs
 messages/             Translation catalogs (ar.json, en.json)
