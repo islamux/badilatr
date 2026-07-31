@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Search } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 
@@ -6,7 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { searchPerfumes } from "@/server/repositories/search";
 
-export const dynamic = "force-dynamic";
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Search" });
+  return { title: t("title") };
+}
 
 export default async function SearchPage({
   params,

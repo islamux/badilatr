@@ -16,7 +16,11 @@
     "dark": "Dark"
   },
   "Locale": {
-    "switch": "العربية"
+    "switch": "العربية",
+    "switchLabel": "Switch language"
+  },
+  "A11y": {
+    "skip": "Skip to content"
   },
   "Landing": {
     "badge": "Fragrance discovery engine",
@@ -34,7 +38,9 @@
   "Perfumes": {
     "title": "All perfumes",
     "count": "{count} perfumes",
-    "empty": "No perfumes yet. Check back soon."
+    "empty": "No perfumes yet. Check back soon.",
+    "prev": "Previous page",
+    "next": "Next page"
   },
   "Brands": {
     "title": "Houses",
