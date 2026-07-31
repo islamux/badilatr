@@ -19,7 +19,7 @@
   --popover: #fffaf0;
   --popover-foreground: #1a1208;
 
-  --primary: #a9762e; /* aged gold (light) */
+  --primary: #8a5a22; /* aged gold (light) — AA-compliant on parchment */
   --primary-foreground: #fffaf0;
 
   --secondary: #efe6d2; /* champagne tint */
@@ -36,10 +36,10 @@
 
   --border: #e2d5b7;
   --input: #e2d5b7;
-  --ring: #a9762e;
+  --ring: #8a5a22;
 
   /* Brand + material aliases */
-  --gold: #a9762e;
+  --gold: #8a5a22;
   --champagne: #e8d5b7;
   --obsidian: #1a1208;
   --ivory: #f7f1e6;
@@ -47,11 +47,11 @@
   --ink: #1a1208;
 
   /* Note-layer materials (theme-adaptive) */
-  --saffron: #a9762e; /* top */
+  --saffron: #8a5a22; /* top */
   --rose: #9e5a4e; /* heart */
   --amber: #8a5a26; /* base */
 
-  --chart-1: #a9762e;
+  --chart-1: #8a5a22;
   --chart-2: #c5a572;
   --chart-3: #e8d5b7;
   --chart-4: #6b5d44;

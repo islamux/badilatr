@@ -1,10 +1,21 @@
+import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 
 import { BrandCard } from "@/components/brand-card";
 import { Badge } from "@/components/ui/badge";
 import { getAllBrands } from "@/server/repositories/brands";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Brands" });
+  return { title: t("title") };
+}
 
 export default async function BrandsPage({
   params,

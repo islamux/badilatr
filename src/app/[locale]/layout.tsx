@@ -90,6 +90,8 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
+  const tA11y = await getTranslations({ locale, namespace: "A11y" });
+
   const isRtl = locale === "ar";
   const messages = await getMessages();
 
@@ -116,8 +118,14 @@ export default async function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:shadow-lg"
+            >
+              {tA11y("skip")}
+            </a>
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main id="main-content" className="flex-1">{children}</main>
             <SiteFooter />
           </ThemeProvider>
         </NextIntlClientProvider>

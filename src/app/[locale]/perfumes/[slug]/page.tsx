@@ -18,7 +18,7 @@ import {
 import { getAlternatives } from "@/server/repositories/alternatives";
 import { getPerfumeBySlug } from "@/server/repositories/perfumes";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params,

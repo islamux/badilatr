@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -10,6 +11,16 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getLandingPerfumes } from "@/server/repositories/perfumes";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Landing" });
+  return { title: t("title"), description: t("subtitle") };
+}
+
 export default async function LandingPage({
   params,
 }: {
@@ -21,6 +32,26 @@ export default async function LandingPage({
 
   const isAr = locale === "ar";
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Badil Atr",
+    alternateName: "بديل عطر",
+    url: siteUrl,
+  };
+  const siteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: siteUrl,
+    inLanguage: isAr ? "ar-SA" : "en-US",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/${locale}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   const perfumes = await getLandingPerfumes();
 
   const comingSoonSections = [
@@ -31,6 +62,14 @@ export default async function LandingPage({
 
   return (
     <div className="flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border/60">
         <div

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 
+import { reportError } from "@/lib/report-error";
 import { Button } from "@/components/ui/button";
 
 export default function Error({
@@ -15,7 +16,7 @@ export default function Error({
   const t = useTranslations("Errors");
 
   useEffect(() => {
-    console.error(error);
+    reportError(error);
   }, [error]);
 
   return (
