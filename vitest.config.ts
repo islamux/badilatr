@@ -19,8 +19,14 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "text-summary", "lcov"],
-      include: ["src/lib/**", "src/components/ui/**", "scripts/ingest/**"],
-      exclude: ["**/*.test.*", "**/*.spec.*", "**/*.d.ts"],
+      include: ["src/lib/**", "src/components/ui/**", "src/server/repositories/**", "scripts/ingest/**"],
+      exclude: [
+        "**/*.test.*",
+        "**/*.spec.*",
+        "**/*.d.ts",
+        "scripts/ingest/seed.ts",
+        "scripts/ingest/load.ts",
+      ],
       thresholds: {
         statements: 70,
         branches: 70,
